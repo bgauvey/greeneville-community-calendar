@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarService } from '../services/calendar.service';
-import { Event } from '../services/event';
+import { CalendarDay } from '../services/calendar-day';
 
 @Component({
   selector: 'app-events',
@@ -9,7 +9,7 @@ import { Event } from '../services/event';
 })
 export class EventsComponent implements OnInit {
 
-  events: Event[];
+  days: CalendarDay[];
 
   constructor(private calendarService: CalendarService) { }
 
@@ -19,7 +19,10 @@ export class EventsComponent implements OnInit {
 
   getEvents(): void {
     this.calendarService.getEvents()
-      .subscribe(events => this.events = events);
+      .subscribe(days => {
+        console.log(days);
+        this.days = days;
+      });
   }
 
 }

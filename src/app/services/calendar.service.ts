@@ -3,27 +3,27 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import {Event} from './event';
+import {CalendarDay} from './calendar-day';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
-  private calendarUrl = 'http://localhost:55325/api/calendar';
+  private calendarUrl = 'http://localhost:8080/api/events';
 
   constructor(private http: HttpClient) { }
 
-  getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(this.calendarUrl)
+  getEvents(): Observable<CalendarDay[]> {
+    return this.http.get<CalendarDay[]>(this.calendarUrl)
       .pipe(
         catchError(this.handleError('getEvents', []))
       );
   }
 
-  getEvent(id: number): Observable<Event> {
+  getEvent(id: number): Observable<CalendarDay> {
     const url = `${this.calendarUrl}/${id}`;
-    return this.http.get<Event>(url).pipe(
-      catchError(this.handleError<Event>(`getEvent id=${id}`))
+    return this.http.get<CalendarDay>(url).pipe(
+      catchError(this.handleError<CalendarDay>(`getEvent id=${id}`))
     );
   }
 
